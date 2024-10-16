@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Author index{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Author index</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Picture</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>NbBooks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for author in authors %}
+            <tr>
+                <td>{{ author.id }}</td>
+                <td>
+                    {% if author.picture %}
+                        <img src="{{ asset('uploads/author_pictures/' ~ author.picture) }}" alt="{{ author.username }}" class="img-thumbnail" style="max-width: 50px;">
+                    {% else %}
+                        No picture
+                    {% endif %}
+                </td>
+                <td>{{ author.username }}</td>
+                <td>{{ author.email }}</td>
+                <td>{{ author.nbBooks }}</td>
+                <td>
+                    <a href="{{ path('app_author_show', {'id': author.id}) }}" class="btn btn-sm btn-info">show</a>
+                    <a href="{{ path('app_author_edit', {'id': author.id}) }}" class="btn btn-sm btn-primary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_author_new') }}" class="btn btn-success">Create new</a>
+{% endblock %}
